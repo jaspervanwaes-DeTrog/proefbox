@@ -123,9 +123,10 @@
   .benefit>*{min-width:0}
   .shot{margin:0;position:relative;isolation:isolate}
   .shot::before{content:"";position:absolute;inset:14px -14px -14px 14px;border-radius:10px;background:var(--sand);opacity:.55;z-index:-1;transition:transform .6s ease}
-  .shot .ph{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:50% 40%;border-radius:10px;transition:transform 1.2s ease;transform-origin:50% 60%}
+  .shot .ph{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:50% 40%;border-radius:10px;transition:transform 1.2s ease;transform-origin:50% 60%}
   .shot{overflow:visible}
   .shot .frame{overflow:hidden}
+  .shot .pos-portret{object-position:50% 78%}
   .benefit h3{font-size:var(--fs-h3);position:relative;padding-top:18px;margin-bottom:12px}
   .benefit h3::before{content:"";position:absolute;top:0;left:0;width:44px;height:4px;border-radius:4px;background:var(--sand)}
   .benefit .body{max-width:56ch}
@@ -299,7 +300,7 @@
       </div>
 
       <div class="benefit reveal">
-        <figure class="shot"><img class="ph" src="foto-portret.jpg" width="900" height="1125" loading="lazy" alt="Een glimlachende man aan een stenen toonbank, met een glazen bokaal op de voorgrond"></figure>
+        <figure class="shot"><img class="ph pos-portret" src="foto-portret.jpg" width="900" height="1125" loading="lazy" alt="Een glimlachende man aan een stenen toonbank, met een glazen bokaal op de voorgrond"></figure>
         <div class="text">
           <h3>Brood met een verhaal</h3>
           <div class="body">
