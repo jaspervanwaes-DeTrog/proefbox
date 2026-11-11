@@ -117,22 +117,47 @@
   section h2{font-size:var(--fs-h2);max-width:24ch}
   .intro{color:var(--muted);margin:12px 0 0}
 
-  /* voordelen: titel links (met foto), tekst rechts */
-  .benefits{margin-top:32px;border-top:2px solid var(--ink)}
-  .benefit{display:grid;gap:16px 40px;padding:28px 0;border-bottom:1px solid var(--line)}
+  /* voordelen: foto en tekst wisselen af, zodat de foto's het verhaal dragen */
+  .benefits{margin-top:40px;display:grid;gap:48px}
+  .benefit{display:grid;gap:20px 56px;align-items:center}
   .benefit>*{min-width:0}
-  .benefit h3{font-size:var(--fs-h3)}
-  .benefit h3 .n{display:block;font-size:var(--fs-small);font-weight:500;color:var(--accent-text);margin-bottom:4px}
+  .shot{margin:0;position:relative;isolation:isolate}
+  .shot::before{content:"";position:absolute;inset:14px -14px -14px 14px;border-radius:10px;background:var(--sand);opacity:.55;z-index:-1;transition:transform .6s ease}
+  .shot .ph{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;transition:transform 1.2s ease;transform-origin:50% 60%}
+  .shot{overflow:visible}
+  .shot .frame{overflow:hidden}
+  .benefit h3{font-size:var(--fs-h3);position:relative;padding-top:18px;margin-bottom:12px}
+  .benefit h3::before{content:"";position:absolute;top:0;left:0;width:44px;height:4px;border-radius:4px;background:var(--sand)}
+  .benefit .body{max-width:56ch}
   .benefit .body p:last-child{margin-bottom:0}
   .benefit .body .key{font-weight:600;color:var(--accent-text)}
   .benefit .body .note{font-size:var(--fs-small);color:var(--muted)}
-  .benefit figure{margin:0;max-width:340px}
-  .benefit figure img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:6px}
   @media (min-width:860px){
-    .benefit{grid-template-columns:5fr 7fr;align-items:start}
-    .benefit h3{grid-column:1;grid-row:1}
-    .benefit .body{grid-column:2;grid-row:1 / span 2}
-    .benefit figure{grid-column:1;grid-row:2}
+    .benefits{gap:80px}
+    .benefit{grid-template-columns:1fr 1fr}
+    .benefit:nth-child(even) .shot{order:2}
+    .shot .ph{aspect-ratio:5/4}
+    .benefit:hover .shot .ph{transform:scale(1.03)}
+  }
+
+  /* beweging: rustig, en uit bij 'minder beweging' */
+  .js .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+  .js .reveal.in{opacity:1;transform:none}
+  .js .shot .ph{transform:scale(1.08)}
+  .js .reveal.in .shot .ph{transform:scale(1)}
+  @keyframes drift{from{transform:scale(1.02)}to{transform:scale(1.09) translate(-1%,-1%)}}
+  .hero-photo{overflow:hidden;border-radius:6px}
+  .hero-photo img{animation:drift 18s ease-in-out infinite alternate}
+  .box figure{overflow:hidden;border-radius:6px}
+  .box figure img{transition:transform 1.2s ease}
+  .box figure:hover img{transform:scale(1.04)}
+  .btn{transition:background .2s ease,transform .2s ease}
+  .btn:hover{transform:translateY(-2px)}
+  @media (prefers-reduced-motion:reduce){
+    .js .reveal{opacity:1;transform:none}
+    .js .shot .ph,.js .reveal.in .shot .ph{transform:none}
+    .hero-photo img{animation:none}
+    .btn:hover,.benefit:hover .shot .ph,.box figure:hover img{transform:none}
   }
 
   /* proefbox */
@@ -188,6 +213,7 @@
 </style>
 </head>
 <body>
+<script>document.documentElement.classList.add("js")</script>
 
 <header class="top">
   <div class="wrap">
@@ -233,52 +259,59 @@
     <p class="intro measure">Je klanten kiezen bewust voor bio. Dan verwachten ze ook brood dat bij die keuze past.</p>
 
     <div class="benefits">
-      <div class="benefit">
-        <h3><span class="n">1</span>Brood waarvoor je klanten terugkomen</h3>
-        <div class="body measure">
+      <div class="benefit reveal">
+        <figure class="shot"><img class="ph" src="foto-deeg.jpg" width="900" height="1130" loading="lazy" alt="Twee broodvormen met rijzend deeg, elk met een BIO-sticker erop, op een houten tafel"></figure>
+        <div class="text">
+          <h3>Brood waarvoor je klanten terugkomen</h3>
+          <div class="body">
           <p>Onze desem Henri is al zo'n 40 jaar oud. We werken voornamelijk met steengemalen meel, zonder broodverbeteraars. En we geven het deeg alle tijd om zijn smaak te ontwikkelen.</p>
           <p>Het resultaat? Ambachtelijk desembrood met een eigen karakter. Brood waarmee je je assortiment onderscheidt.</p>
           <p class="key">Onze enige verbeteraar is tijd.</p>
+          </div>
         </div>
-        <figure>
-          <img src="foto-deeg.jpg" width="900" height="1130" loading="lazy" alt="Twee broodvormen met rijzend deeg, elk met een BIO-sticker erop, op een houten tafel">
-        </figure>
       </div>
 
-      <div class="benefit">
-        <h3><span class="n">2</span>Vers brood, klaar vóór je winkel opengaat</h3>
-        <div class="body measure">
+      <div class="benefit reveal">
+        <figure class="shot"><img class="ph" src="foto-broden-links.jpg" width="900" height="720" loading="lazy" alt="Ambachtelijke broden met een knapperige korst, vers uit de oven"></figure>
+        <div class="text">
+          <h3>Vers brood, klaar vóór je winkel opengaat</h3>
+          <div class="body">
           <p>Terwijl jij nog slaapt, zijn wij al onderweg.</p>
           <p>Onze chauffeurs leveren tussen 3 en 9&nbsp;uur. Met een sleutel of toegangscode kunnen ze het brood ook leveren wanneer je er niet bent.</p>
           <p>Zo ligt je brood klaar vóór de eerste klant binnenkomt.</p>
           <p class="key">Wij leveren vroeg. Jij begint je dag met een gevuld broodrek.</p>
           <p class="note">Minimumafname: €&nbsp;85 per levering in Vlaanderen en Brussel.</p>
+          </div>
         </div>
       </div>
 
-      <div class="benefit">
-        <h3><span class="n">3</span>Minder broodverlies, meer verkoopkansen</h3>
-        <div class="body measure">
+      <div class="benefit reveal">
+        <figure class="shot"><img class="ph" src="foto-broden-rechts.jpg" width="900" height="720" loading="lazy" alt="Broden met bloem en een gesneden korst op een rek"></figure>
+        <div class="text">
+          <h3>Minder broodverlies, meer verkoopkansen</h3>
+          <div class="body">
           <p>Een mooi gevuld broodrek, ook later op de dag? Dat kan.</p>
           <p>Naast ons dagverse brood bieden we Pur Pain aan: zuurstofarm verpakt brood dat je in korte tijd afbakt. Bij levering is het nog ongeveer 21 dagen houdbaar.</p>
           <p>Zo kun je je aanbod beter afstemmen op de vraag en het risico op onverkocht brood beperken.</p>
           <p class="key">Vers brood voor de ochtend. Pur Pain voor later op de dag.</p>
+          </div>
         </div>
       </div>
 
-      <div class="benefit">
-        <h3><span class="n">4</span>Brood met een verhaal</h3>
-        <div class="body measure">
+      <div class="benefit reveal">
+        <figure class="shot"><img class="ph" src="foto-portret.jpg" width="900" height="1125" loading="lazy" alt="Een glimlachende man aan een stenen toonbank, met een glazen bokaal op de voorgrond"></figure>
+        <div class="text">
+          <h3>Brood met een verhaal</h3>
+          <div class="body">
           <p>Bij De Trog geloven we dat goed brood tijd en vakmanschap vraagt.</p>
           <p>We bakken biologisch, vormen het grootste deel van onze broden met de hand en werken met respect voor onze ingrediënten.</p>
           <p>Al sinds eind jaren 70 staat volkorenbrood centraal in onze bakkerij in Ieper.</p>
           <p>Een verhaal dat je met plezier aan je klanten vertelt.</p>
           <p class="key">Met zorg gebakken. Met trots verkocht.</p>
+          </div>
         </div>
-        <figure>
-          <img src="foto-portret.jpg" width="900" height="1125" loading="lazy" alt="Een glimlachende man aan een stenen toonbank, met een glazen bokaal op de voorgrond">
-        </figure>
       </div>
+
     </div>
   </div>
 </section>
@@ -450,6 +483,13 @@ var CONFIG = {
     s.setAttribute("data-domain", CONFIG.plausibleDomain);
     document.head.appendChild(s);
   }
+
+  /* beweging bij het scrollen */
+  var els = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function(es){ es.forEach(function(x){ if (x.isIntersecting) { x.target.classList.add("in"); io.unobserve(x.target); } }); }, {threshold:.15});
+    els.forEach(function(el){ io.observe(el); });
+  } else { els.forEach(function(el){ el.classList.add("in"); }); }
 
   $("cta").addEventListener("click", function(e){ e.preventDefault(); $("aanvragen").scrollIntoView({behavior:"smooth"}); });
 
