@@ -69,6 +69,13 @@
   .btn.line{background:transparent;border:2px solid var(--ink);color:var(--ink);padding:13px 22px}
   .btn.line:hover{background:var(--ink);color:var(--bg)}
 
+  /* zwevende knop */
+  .sticky-cta{position:fixed;right:20px;bottom:20px;z-index:50;box-shadow:0 6px 20px rgba(31,27,22,.28);opacity:0;transform:translateY(16px);visibility:hidden;transition:opacity .3s ease,transform .3s ease,visibility 0s linear .3s}
+  .sticky-cta.show{opacity:1;transform:none;visibility:visible;transition-delay:0s}
+  #aanvragen{scroll-margin-top:24px}
+  @media (max-width:600px){.sticky-cta{left:16px;right:16px;bottom:16px;text-align:center}}
+  @media (prefers-reduced-motion:reduce){.sticky-cta{transition:none}}
+
   /* bovenbalk */
   .top{background:var(--band);color:var(--band-ink)}
   .top .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:16px}
@@ -410,6 +417,8 @@
 </section>
 </main>
 
+<a class="btn sticky-cta" id="sticky-cta" href="#aanvragen" aria-label="Vraag je gratis proefbox aan">Vraag je gratis proefbox aan</a>
+
 <footer>
   <div class="wrap">
     <div>
@@ -519,6 +528,26 @@ var CONFIG = {
     }).catch(function(){
       fail("Versturen is niet gelukt. Controleer je verbinding of mail naar info@detrog.be.");
     });
+  });
+})();
+</script>
+<script>
+(function(){
+  var cta=document.getElementById("sticky-cta"), target=document.getElementById("aanvragen");
+  if(!cta||!target) return;
+  var formVisible=false, scrolled=false;
+  function update(){ cta.classList.toggle("show", scrolled && !formVisible); }
+  window.addEventListener("scroll", function(){ var y=(window.scrollY||document.documentElement.scrollTop)>40; if(y!==scrolled){ scrolled=y; update(); } }, {passive:true});
+  if("IntersectionObserver" in window){
+    new IntersectionObserver(function(en){ formVisible=en[0].isIntersecting; update(); }, {threshold:.25}).observe(target);
+  }
+  cta.addEventListener("click", function(e){
+    e.preventDefault();
+    var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+    target.scrollIntoView({behavior:reduce?"auto":"smooth", block:"center"});
+    var mail=document.getElementById("email");
+    setTimeout(function(){ try{ mail.focus({preventScroll:true}); }catch(err){ mail.focus(); } }, reduce?0:600);
+    try{ history.replaceState(null,"","#aanvragen"); }catch(err){}
   });
 })();
 </script>
