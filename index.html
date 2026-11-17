@@ -364,56 +364,17 @@
     <h2>Ontdek wat De Trog voor jouw winkel kan betekenen</h2>
     <p class="intro">Benieuwd of ons brood bij jouw assortiment past? Vraag je gratis proefbox aan. Dan spreken we samen af wanneer we die kunnen leveren.</p>
 
-    <form id="boxform" novalidate>
-      <h3 class="full">Aanvraagformulier</h3>
+    <form id="boxform" novalidate style="max-width:640px">
       <div class="hp" aria-hidden="true"><label for="website">Laat dit leeg</label><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
       <div class="full">
-        <label for="winkel">Naam van je winkel</label>
-        <input id="winkel" name="winkel" type="text" required autocomplete="organization">
-      </div>
-      <div>
-        <label for="soort">Type winkel</label>
-        <select id="soort" name="soort" required>
-          <option value="">Kies…</option>
-          <option>Biowinkel</option>
-          <option>Hoevewinkel</option>
-          <option>Andere</option>
-        </select>
-      </div>
-      <div>
-        <label for="naam">Jouw naam</label>
-        <input id="naam" name="naam" type="text" required autocomplete="name">
-      </div>
-      <div>
         <label for="email">E-mailadres</label>
-        <input id="email" name="email" type="email" required autocomplete="email">
-      </div>
-      <div>
-        <label for="tel">Telefoonnummer</label>
-        <input id="tel" name="telefoon" type="tel" required autocomplete="tel">
-      </div>
-      <div class="full">
-        <label for="straat">Straat en huisnummer</label>
-        <input id="straat" name="straat" type="text" required autocomplete="street-address">
-      </div>
-      <div>
-        <label for="postcode">Postcode</label>
-        <input id="postcode" name="postcode" type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" required autocomplete="postal-code">
-      </div>
-      <div>
-        <label for="gemeente">Gemeente</label>
-        <input id="gemeente" name="gemeente" type="text" required autocomplete="address-level2">
-      </div>
-      <div class="full">
-        <label class="check" for="akkoord">
-          <input id="akkoord" name="akkoord" type="checkbox" required>
-          <span>Ik geef Bio Bakkerij De Trog toestemming om mij te contacteren over mijn aanvraag. Lees het <a href="https://www.detrog.be/nl/privacy-policy" target="_blank" rel="noopener">privacybeleid</a>.</span>
-        </label>
+        <input id="email" name="email" type="email" required autocomplete="email" placeholder="naam@winkel.be">
       </div>
       <div class="full submit">
         <button class="btn" type="submit" id="send">Vraag mijn gratis proefbox aan</button>
         <span class="status" id="status" role="status" aria-live="polite"></span>
       </div>
+      <p class="full" style="margin:0;font-size:var(--fs-small);color:var(--muted)">Door je aan te vragen geef je Bio Bakkerij De Trog toestemming om je te contacteren over je aanvraag. Lees het <a href="https://www.detrog.be/nl/privacy-policy" target="_blank" rel="noopener">privacybeleid</a>.</p>
     </form>
 
     <div class="done" id="done" hidden tabindex="-1">
@@ -543,14 +504,7 @@ var CONFIG = {
 
     var f = form.elements, E = CONFIG.entries, body = new URLSearchParams();
     body.append(E.bron, bron);
-    body.append(E.winkel, f.winkel.value.trim());
-    body.append(E.soort, f.soort.value);
-    body.append(E.naam, f.naam.value.trim());
     body.append(E.email, f.email.value.trim());
-    body.append(E.telefoon, f.telefoon.value.trim());
-    body.append(E.straat, f.straat.value.trim());
-    body.append(E.postcode, f.postcode.value.trim());
-    body.append(E.gemeente, f.gemeente.value.trim());
     body.append(E.akkoord, CONFIG.akkoordTekst);
 
     /* Google Forms geeft geen leesbaar antwoord terug (no-cors). Een mislukte verbinding wel. */
